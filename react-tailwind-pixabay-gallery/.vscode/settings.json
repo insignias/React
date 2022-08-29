@@ -1,0 +1,5 @@
+{
+    "path-intellisense.autoTriggerNextSuggestion": true,
+    "emmet.showSuggestionsAsSnippets": true,
+    "tailwindCSS.emmetCompletions": true
+}
