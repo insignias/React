@@ -39,6 +39,7 @@ class LoginController extends React.Component {
 
 function UserGreeting() {
   return <h1>Welcome back!</h1>;
+  
 }
 
 function GuestGreeting() {
