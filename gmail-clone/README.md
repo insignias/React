@@ -53,6 +53,6 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 3. `npm run build`
 4. `firebase deploy`
 
-### Access Deployed App: `https://clone-5e56a.web.app`
+### [Access Deployed App](https://clone-5e56a.web.app)
 1. Login using gmail
 2. Compose an email and see it pop in the emailList :) 

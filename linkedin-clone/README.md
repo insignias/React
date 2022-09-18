@@ -44,3 +44,14 @@ You don't have to ever use `eject`. The curated feature set is suitable for smal
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+# Deployment steps:
+
+1. `firebase login`
+2. `firebase init`
+3. `npm run build`
+4. `firebase deploy`
+
+### [Access Deployed App](https://linkedin-clone-8f754.web.app/)
+1. Register first
+2. Then try to login and post something :)
