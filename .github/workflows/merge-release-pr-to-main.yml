@@ -5,6 +5,8 @@ on:
 
 jobs:
   merge-release-to-main:
+    runs-on: ubuntu-20.04
+    steps:
     - name: enable merge commits
       uses: octokit/request-action@v2.x
       with:
