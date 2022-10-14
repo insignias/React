@@ -1,6 +1,11 @@
 name: merge-release-pr-to-main
 
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: PR number to merge
+        required: true
 
 jobs:
   merge-release-to-main:
@@ -22,7 +27,7 @@ jobs:
           route: PUT /repos/{owner}/{repo}/pulls/{pull_number}/merge
           owner: insignias
           repo: React
-          pull_number: '1'
+          pull_number: ${{ inputs.pr_number }}
           merge_method: 'merge'
         env:
           GITHUB_TOKEN: ${{ secrets.MERGE_TOKEN }}
