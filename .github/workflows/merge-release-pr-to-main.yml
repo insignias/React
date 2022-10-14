@@ -1,0 +1,38 @@
+name: merge-release-pr-to-main
+
+on:
+  workflow_dispatch:
+
+jobs:
+  merge-release-to-main:
+    - name: enable merge commits
+      uses: octokit/request-action@v2.x
+      with:
+      route: PATCH /repos/{owner}/{repo}
+      owner: insignias
+      repo: React
+      allow_merge_commit: true
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: merge release branch pr to main
+      uses: octokit/request-action@v2.x
+      with:
+        route: PUT /repos/{owner}/{repo}/pulls/{pull_number}/merge
+        owner: insignias
+        repo: React
+        pull_number: '1'
+        merge_method: 'merge'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: disable merge commits
+      uses: octokit/request-action@v2.x
+      with:
+      route: PATCH /repos/{owner}/{repo}
+      owner: insignias
+      repo: React
+      allow_merge_commit: false
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  
