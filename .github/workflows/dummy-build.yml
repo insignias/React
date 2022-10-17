@@ -11,9 +11,10 @@ jobs:
           ref: ${{ github.head_ref }}
           token: ${{ secrets.MERGE_TOKEN }}
       
-      - name: run for 5 mins
+
+      - name: run for 2 mins
         run: |
-          runtime="5 minute"
+          runtime="2 minute"
           endtime=$(date -ud "$runtime" +%s)
 
           while [[ $(date -u +%s) -le $endtime ]]
