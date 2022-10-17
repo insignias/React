@@ -12,12 +12,18 @@ jobs:
     if: contains(github.ref_name, 'gh-workflow')
     runs-on: ubuntu-20.04
     steps:
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: |
-          echo "$GITHUB_CONTEXT"
+      - uses: actions-cool/check-user-permission@v2
+        id: check
+        with:
+          require: 'admin'
+          username: ${{ github.triggering_actor }}
+
+      - run: echo "user-permission = ${{ steps.check.outputs.user-permission }}"
+      - run: echo "require-result = ${{ steps.check.outputs.require-result }}"
+      - run: echo "check-result = ${{ steps.check.outputs.check-result }}"
+      
       - name: enable merge commits
+        if: steps.check.outputs.require-result
         uses: octokit/request-action@v2.x
         with:
           route: PATCH /repos/{owner}/{repo}
@@ -28,6 +34,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.MERGE_TOKEN }}
 
       - name: merge release branch pr to main
+        if: steps.check.outputs.require-result
         uses: octokit/request-action@v2.x
         with:
           route: PUT /repos/{owner}/{repo}/pulls/{pull_number}/merge
@@ -39,6 +46,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.MERGE_TOKEN }}
 
       - name: disable merge commits
+        if: steps.check.outputs.require-result
         uses: octokit/request-action@v2.x
         with:
           route: PATCH /repos/{owner}/{repo}
