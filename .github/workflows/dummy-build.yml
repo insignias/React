@@ -10,7 +10,6 @@ jobs:
         with: 
           ref: ${{ github.head_ref }}
           token: ${{ secrets.MERGE_TOKEN }}
-      
 
       - name: run for 1 mins
         run: |
