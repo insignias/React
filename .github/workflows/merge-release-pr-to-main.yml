@@ -19,6 +19,8 @@ jobs:
           username: ${{ github.triggering_actor }}
 
       - run: echo "user-permission = ${{ steps.check.outputs.user-permission }}"
+      - run: echo "require-result = ${{ steps.check.outputs.require-result }}"
+      - run: echo "check-result = ${{ steps.check.outputs.check-result }}"
       
       - name: enable merge commits
         if: steps.check.outputs.require-result == true
