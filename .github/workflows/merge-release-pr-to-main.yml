@@ -29,7 +29,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.MERGE_TOKEN }}
       
-      - run: echo ${{ fromJson(steps.check_source.outputs.data).head.ref }}
+      - run: |
+          echo ${{ fromJson(steps.check_source.outputs.data).head.ref }}
+          echo ${{ fromJson(steps.check_source.outputs.data).base.ref }}
 
       - name: enable merge commits
         if: steps.check_admin.outputs.require-result && startsWith(fromJson(steps.check_source.outputs.data).head.ref, 'gh-workflow') && startsWith(fromJson(steps.check_source.outputs.data).base.ref, 'main')
