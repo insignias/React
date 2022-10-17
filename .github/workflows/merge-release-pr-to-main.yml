@@ -16,7 +16,7 @@ jobs:
         id: check
         with:
           require: 'admin'
-          username: github.triggering_actor
+          username: ${{ github.triggering_actor }}
 
       - run: echo "user-permission = ${{ steps.check.outputs.user-permission }}"
       
