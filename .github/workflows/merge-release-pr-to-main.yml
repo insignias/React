@@ -30,7 +30,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.MERGE_TOKEN }}
       
-      - run: echo ${{ steps.check_source.outputs.head.ref }}
+      - run: echo ${{ steps.check_source.outputs.data }}
 
       - name: enable merge commits
         if: steps.check.outputs.require-result && startsWith(steps.check_source.outputs.head.ref, 'release/')
