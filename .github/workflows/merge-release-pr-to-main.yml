@@ -9,7 +9,6 @@ on:
 
 jobs:
   merge-release-to-main:
-    if: contains(github.ref_name, 'gh-workflow')
     runs-on: ubuntu-20.04
     steps:
       - uses: actions-cool/check-user-permission@v2
@@ -33,7 +32,7 @@ jobs:
       - run: echo ${{ fromJson(steps.check_source.outputs.data).head.ref }}
 
       - name: enable merge commits
-        if: steps.check_admin.outputs.require-result && startsWith(fromJson(steps.check_source.outputs.data).head.ref, 'release/')
+        if: steps.check_admin.outputs.require-result && startsWith(fromJson(steps.check_source.outputs.data).head.ref, 'gh-workflow')
         uses: octokit/request-action@v2.x
         with:
           route: PATCH /repos/{owner}/{repo}
@@ -44,7 +43,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.MERGE_TOKEN }}
 
       - name: merge release branch pr to main
-        if: steps.check_admin.outputs.require-result && startsWith(fromJson(steps.check_source.outputs.data).head.ref, 'release/')
+        if: steps.check_admin.outputs.require-result && startsWith(fromJson(steps.check_source.outputs.data).head.ref, 'gh-workflow')
         uses: octokit/request-action@v2.x
         with:
           route: PUT /repos/{owner}/{repo}/pulls/{pull_number}/merge
@@ -56,7 +55,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.MERGE_TOKEN }}
 
       - name: disable merge commits
-        if: steps.check_admin.outputs.require-result && startsWith(fromJson(steps.check_source.outputs.data).head.ref, 'release/')
+        if: steps.check_admin.outputs.require-result && startsWith(fromJson(steps.check_source.outputs.data).head.ref, 'gh-workflow')
         uses: octokit/request-action@v2.x
         with:
           route: PATCH /repos/{owner}/{repo}
