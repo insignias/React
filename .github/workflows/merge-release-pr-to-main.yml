@@ -12,6 +12,11 @@ jobs:
     if: contains(github.ref_name, 'gh-workflow')
     runs-on: ubuntu-20.04
     steps:
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: |
+          echo "$GITHUB_CONTEXT"
       - name: enable merge commits
         uses: octokit/request-action@v2.x
         with:
