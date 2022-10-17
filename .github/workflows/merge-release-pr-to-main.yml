@@ -9,17 +9,18 @@ on:
 
 jobs:
   merge-release-to-main:
+    if: contains(github.ref_name, 'gh-workflow')
     runs-on: ubuntu-20.04
     steps:
-      # - name: enable merge commits
-      #   uses: octokit/request-action@v2.x
-      #   with:
-      #     route: PATCH /repos/{owner}/{repo}
-      #     owner: insignias
-      #     repo: React
-      #     allow_merge_commit: true
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.MERGE_TOKEN }}
+      - name: enable merge commits
+        uses: octokit/request-action@v2.x
+        with:
+          route: PATCH /repos/{owner}/{repo}
+          owner: insignias
+          repo: React
+          allow_merge_commit: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.MERGE_TOKEN }}
 
       - name: merge release branch pr to main
         uses: octokit/request-action@v2.x
@@ -32,13 +33,13 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.MERGE_TOKEN }}
 
-      # - name: disable merge commits
-      #   uses: octokit/request-action@v2.x
-      #   with:
-      #     route: PATCH /repos/{owner}/{repo}
-      #     owner: insignias
-      #     repo: React
-      #     allow_merge_commit: false
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.MERGE_TOKEN }}
+      - name: disable merge commits
+        uses: octokit/request-action@v2.x
+        with:
+          route: PATCH /repos/{owner}/{repo}
+          owner: insignias
+          repo: React
+          allow_merge_commit: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.MERGE_TOKEN }}
   
