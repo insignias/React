@@ -17,24 +17,16 @@ jobs:
           require: 'admin'
           username: ${{ github.triggering_actor }}
 
-      - name: check if PR source is a release branch
-        if: steps.check_admin.outputs.require-result
-        id: check_source
-        uses: octokit/request-action@v2.x
-        with:
-          route: GET /repos/{owner}/{repo}/pulls/{pull_number}
-          owner: insignias
-          repo: React
-          pull_number: ${{ inputs.pr_number }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.MERGE_TOKEN }}
-      
+      - name: Get branch name
+        id: branch-name
+        uses: tj-actions/branch-names@v5.1
+
       - run: |
-          echo ${{ fromJson(steps.check_source.outputs.data).head.ref }}
-          echo ${{ fromJson(steps.check_source.outputs.data).base.ref }}
+          echo ${{ steps.branch_name.outputs.base_ref_branch }}
+          echo ${{ steps.branch_name.outputs.head_ref_branch }}
 
       - name: enable merge commits
-        if: steps.check_admin.outputs.require-result && startsWith(fromJson(steps.check_source.outputs.data).head.ref, 'gh-workflow') && startsWith(fromJson(steps.check_source.outputs.data).base.ref, 'main')
+        if: steps.check_admin.outputs.require-result && startsWith(steps.branch_name.outputs.head_ref_branch, 'gh-workflow') && steps.branch_name.outputs.base_ref_branch == 'main'
         uses: octokit/request-action@v2.x
         with:
           route: PATCH /repos/{owner}/{repo}
