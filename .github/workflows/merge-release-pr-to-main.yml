@@ -7,6 +7,7 @@ on:
         description: PR number to merge
         required: true
 
+
 jobs:
   merge-release-to-main:
     runs-on: ubuntu-20.04
